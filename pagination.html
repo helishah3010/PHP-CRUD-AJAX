@@ -1,0 +1,86 @@
+<html>
+<head>
+<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+<meta content="utf-8" http-equiv="encoding">
+<script>
+function show()
+{	
+	var xmlhttp;
+	var typevalue=document.getElementById("typeid").value;
+	var txtvalue=document.getElementById("searchid").value;
+	
+	if(typevalue=="" || txtvalue.length==0 )
+	{
+		document.getElementById("output").innerHTML="Enter text";
+	}	
+	
+	if(window.XMLHttpRequest)
+	{
+		xmlhttp=new XMLHttpRequest();
+	}
+	else
+	{
+		xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+	}
+	xmlhttp.onreadystatechange=function()
+	{
+		if(xmlhttp.readyState==4 && xmlhttp.status==200)
+		{
+			document.getElementById("output").innerHTML=xmlhttp.responseText;
+		}
+	}
+	var queryString = "optvalue=" + typevalue ;
+	queryString +=  "&searchvalue=" + txtvalue;
+	xmlhttp.open("POST", "pagephpCopy.php", true);
+	xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");  //when we use POST,we need to add this line and also specify queryString in send() function
+	xmlhttp.send(queryString);
+	//xmlhttp.open("GET","pagephp.php?optvalue="+typevalue+"&searchvalue="+txtvalue+"",true);
+	
+}
+
+function Pagination(page_id){
+	var xmlhttp;
+	var typevalue=document.getElementById("typeid").value;
+	var txtvalue=document.getElementById("searchid").value;
+	
+	if(typevalue=="" || txtvalue.length==0)
+	{
+		document.getElementById("output").innerHTML="Enter text";
+	}	
+	
+	if(window.XMLHttpRequest)
+	{
+		xmlhttp=new XMLHttpRequest();
+	}
+	else
+	{
+		xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+	}
+	xmlhttp.onreadystatechange=function()
+	{
+		if(xmlhttp.readyState==4 && xmlhttp.status==200)
+		{
+			document.getElementById("output").innerHTML=xmlhttp.responseText;
+		}
+	}
+	var queryString = "?page=" + page_id ;
+	xmlhttp.open("GET", "pagephpCopy.php"+queryString, true);
+	xmlhttp.send();
+}
+</script>
+</head>
+<body>
+<form>
+<select name="types" id="typeid">
+<option value="">Select type</option>
+<option value="ID">ID</option>
+<option value="Name">Name</option>
+<option value="phone_no">Contact no</option>
+</select>
+Search<input type="text" id="searchid" name="search" placeholder="Enter text here"/>
+<input type="button" value="Get data" onclick="show()"/>
+
+</form>
+<div id="output">Data will be displayed here.</div>
+</body>
+</html>

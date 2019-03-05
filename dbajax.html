@@ -1,0 +1,43 @@
+<html>
+<head>
+<script>
+function show(str)
+{
+	if(str.length==0)
+	{
+		document.getElementById("output").innerHTML="No output";
+		return;
+	}
+	if(window.XMLHttpRequest)
+	{
+		xmlhttp=new XMLHttpRequest();
+	}
+	else
+	{
+		xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+	}
+	xmlhttp.onreadystatechange=function()
+	{
+		if(xmlhttp.readyState==4 && xmlhttp.status==200)
+		{
+			document.getElementById("output").innerHTML=xmlhttp.responseText;
+		}
+	}
+	xmlhttp.open("GET","dbajaxphp.php?val="+str,true);
+	xmlhttp.send();
+}
+</script>
+</head>
+<body>
+
+<form>
+<select name="name" onchange="show(this.value)">
+<option value="">Select name</option>
+<option value="Heli">Heli</option>
+<option value="Kinjal">Kinjal</option>
+<option value="Nidhi">Nidhi</option>
+</select>
+</form>
+<div id="output">Information will be displayed here.</div>
+</body>
+</html>
